@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#000000"/>
+  
+  <!-- Glow effect -->
+  <circle cx="16" cy="16" r="14" fill="#00ff00" opacity="0.2"/>
+  
+  <!-- Letters AS -->
+  <text x="16" y="22" font-family="Arial, sans-serif" font-size="16" font-weight="bold" 
+        fill="#00ff00" text-anchor="middle" filter="url(#glow)">
+    AS
+  </text>
+  
+  <!-- Glow filter -->
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+      <feColorMatrix type="matrix" values="
+        1 0 0 0 0
+        0 1 0 0 0
+        0 0 1 0 0
+        0 0 0 5 -2
+      "/>
+    </filter>
+  </defs>
+</svg> 
