@@ -214,14 +214,14 @@ const Home = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="h-screen flex items-center justify-center text-center px-4 relative z-10"
+        className="h-screen flex items-center justify-center text-center px-4 relative z-10 -mt-20"
       >
-        <div>
+        <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.8 }}
-            className="code-printer"
+            className="code-printer mb-6"
           >
             <div className="code-line">
               <CodePrinter />
@@ -242,7 +242,7 @@ const Home = () => {
             className="text-[#00ff00] max-w-2xl mx-auto hacker-text hero-description"
           >
             <CrypticText 
-              text="I am a Computer Science student passionate about software development. Here you can find my latest projects and get to know me better." 
+              text="An aspiring software developer with a passion for creating elegant solutions to complex problems. Here you can find my projects, skills, and any ideas I am working on." 
               className="inline-block"
             />
           </motion.p>
@@ -250,7 +250,7 @@ const Home = () => {
       </motion.section>
 
       {/* About Section */}
-      <section className="py-20 px-4 relative z-10">
+      <section className="min-h-screen flex items-center justify-center px-4 relative z-10">
         <div className="container mx-auto max-w-4xl">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -260,18 +260,21 @@ const Home = () => {
             className="text-center"
           >
             <h2 className="text-[#00ff00] hacker-text section-title mb-8">
-              <CrypticText text="About Me" className="inline-block" />
+              About Me
             </h2>
             <p className="text-[#00ff00] hacker-text content-text max-w-2xl mx-auto">
-              <CrypticText 
-                text="I love creating elegant solutions to complex problems. My journey in software development has equipped me with skills in various technologies and frameworks." 
-                className="inline-block"
-              />
+              I am a third year computer science student at the University of Calgary. My interest in different fields of computer science has equipped with a versatile and ever so growing skillset.
             </p>
           </motion.div>
 
           {/* Skills Section */}
-          <section className="py-20 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mt-20"
+          >
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -301,7 +304,7 @@ const Home = () => {
                 </motion.span>
               ))}
             </motion.div>
-          </section>
+          </motion.div>
         </div>
       </section>
     </div>
@@ -313,6 +316,7 @@ const CodePrinter = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
 
   const languages = [
     { name: 'Python', code: 'print("Hello, World!")' },
@@ -327,7 +331,7 @@ const CodePrinter = () => {
 
   useEffect(() => {
     const currentCode = languages[currentLanguage].code;
-    const typingSpeed = 50; // Speed between each character
+    const typingSpeed = 60; // Reduced from 75ms to 60ms for slightly faster typing
 
     const timeout = setTimeout(() => {
       if (isDeleting) {
@@ -335,12 +339,14 @@ const CodePrinter = () => {
           setIsDeleting(false);
           setCurrentLanguage((prev) => (prev + 1) % languages.length);
           setCurrentIndex(0);
+          setIsTyping(true);
         } else {
           setDisplayedText(currentCode.slice(0, displayedText.length - 1));
         }
-      } else {
+      } else if (isTyping) {
         if (displayedText === currentCode) {
-          setTimeout(() => setIsDeleting(true), 2000);
+          setIsTyping(false);
+          setTimeout(() => setIsDeleting(true), 1000); // Reduced from 1200ms to 1000ms for slightly shorter pause
         } else {
           setDisplayedText(currentCode.slice(0, currentIndex + 1));
           setCurrentIndex((prev) => prev + 1);
@@ -349,7 +355,7 @@ const CodePrinter = () => {
     }, typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [displayedText, isDeleting, currentIndex, currentLanguage]);
+  }, [displayedText, isDeleting, currentIndex, currentLanguage, isTyping]);
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import CrypticHoverText from '../components/CrypticHoverText';
 
 const MatrixRain = () => {
   const canvasRef = useRef(null);
@@ -76,24 +77,21 @@ const MatrixRain = () => {
 const Projects = () => {
   const projects = [
     {
-      title: "Project 1",
-      description: "A brief description of the project and its key features.",
+      title: "PortoBeats",
+      description: "A music streaming platform built with React and Node.js, featuring real-time audio playback and playlist management.",
       technologies: ["React", "Node.js", "MongoDB"],
-      image: "project1.jpg",
       link: "#"
     },
     {
       title: "Project 2",
-      description: "A brief description of the project and its key features.",
+      description: "A full-stack web application showcasing modern development practices and responsive design.",
       technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
-      image: "project2.jpg",
       link: "#"
     },
     {
       title: "Project 3",
-      description: "A brief description of the project and its key features.",
+      description: "An innovative solution leveraging Python and Django for efficient data processing and visualization.",
       technologies: ["Python", "Django", "PostgreSQL"],
-      image: "project3.jpg",
       link: "#"
     }
   ];
@@ -109,13 +107,6 @@ const Projects = () => {
             font-family: 'Press Start 2P', cursive;
             text-shadow: 0 0 10px #00ff00;
             line-height: 1.8;
-          }
-          .hacker-border {
-            border: 2px solid #00ff00;
-            box-shadow: 0 0 10px #00ff00;
-          }
-          .hacker-bg {
-            background-color: rgba(0, 255, 0, 0.1);
           }
           .section-title {
             font-size: clamp(1rem, 2vw, 1.5rem);
@@ -134,17 +125,17 @@ const Projects = () => {
         `}
       </style>
 
-      <div className="container mx-auto max-w-6xl relative z-10">
+      <div className="container mx-auto max-w-4xl relative z-10 py-20">
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-green-500 text-center mb-12 hacker-text section-title"
+          className="text-[#00ff00] text-center mb-16 hacker-text section-title"
         >
           My Projects
         </motion.h1>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="space-y-24">
           {projects.map((project, index) => (
             <motion.div
               key={index}
@@ -152,31 +143,43 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="bg-black/80 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden hacker-border"
+              className="text-center"
             >
-              <div className="h-48 bg-green-900/30"></div>
-              <div className="p-6">
-                <h2 className="text-green-500 mb-4 hacker-text section-title">{project.title}</h2>
-                <p className="text-green-400 mb-4 hacker-text content-text">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="bg-black/80 backdrop-blur-sm text-green-500 px-2 py-1 rounded hacker-border hacker-text tech-tag"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <a 
-                  href={project.link}
-                  className="text-green-500 hover:text-green-400 hacker-text content-text inline-block"
-                >
-                  Learn more →
-                </a>
+              <h2 className="text-[#00ff00] mb-6 hacker-text section-title">
+                {project.title}
+              </h2>
+              <div className="text-[#00ff00] mb-8 hacker-text content-text max-w-2xl mx-auto">
+                {project.title === "PortoBeats" ? (
+                  <div className="flex justify-center">
+                    <div className="max-w-[600px]">
+                      <CrypticHoverText 
+                        text={project.description} 
+                        className="inline-block cursor-pointer text-center leading-relaxed"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  project.description
+                )}
               </div>
+              <div className="flex flex-wrap justify-center gap-3 mb-8">
+                {project.technologies.map((tech, techIndex) => (
+                  <span
+                    key={techIndex}
+                    className="text-[#00ff00] hacker-text tech-tag"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <motion.a 
+                href={project.link}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block text-[#00ff00] hover:text-[#00ff00]/80 hacker-text content-text transition-colors duration-300"
+              >
+                View Project →
+              </motion.a>
             </motion.div>
           ))}
         </div>

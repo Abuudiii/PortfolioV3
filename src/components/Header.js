@@ -10,7 +10,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b-2 border-green-500">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-green/80 backdrop-blur-sm border-b-2 border-green-500">
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
