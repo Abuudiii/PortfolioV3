@@ -1,6 +1,47 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import CrypticHoverText from '../components/CrypticHoverText';
+import { useNavigate } from 'react-router-dom';
+
+// New TerminalInput component
+const TerminalInput = ({ projectTitle }) => {
+  const [command, setCommand] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (command.trim().toLowerCase() === `cd ${projectTitle}`.toLowerCase()) {
+        navigate(`/${projectTitle.toLowerCase()}`);
+      } else {
+        setError(`Command not recognized. Try "cd ${projectTitle}"`);
+        setTimeout(() => setError(''), 3000);
+      }
+    }
+  };
+
+  return (
+    <div className="terminal-container w-full max-w-md mx-auto">
+      <div className="terminal-prompt bg-green/ backdrop-blur-sm p-3 rounded-md">
+        <div className="flex items-center">
+          <span className="text-[#00ff00] mr-2 hacker-text text-xs">$</span>
+          <input
+            type="text"
+            value={command}
+            onChange={(e) => setCommand(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="bg-transparent text-[#00ff00] outline-none w-full hacker-text text-xs"
+            placeholder={`cd ${projectTitle}`}
+            spellCheck="false"
+          />
+        </div>
+        {error && (
+          <div className="text-red-500 text-xs mt-2 hacker-text">{error}</div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const MatrixRain = () => {
   const canvasRef = useRef(null);
@@ -74,6 +115,22 @@ const MatrixRain = () => {
   );
 };
 
+// Update the project rendering to use TerminalInput
+const ProjectCard = ({ project }) => {
+  return (
+    <div className="project-card">
+      <h2>{project.title}</h2>
+      <p>{project.description}</p>
+      <div className="technologies">
+        {project.technologies.map((tech, index) => (
+          <span key={index} className="tech-tag">{tech}</span>
+        ))}
+      </div>
+      <TerminalInput projectTitle={project.title} />
+    </div>
+  );
+};
+
 const Projects = () => {
   const projects = [
     {
@@ -121,6 +178,16 @@ const Projects = () => {
             font-size: clamp(0.5rem, 1vw, 0.7rem);
             line-height: 1.4;
             padding: 0.25rem 0.5rem;
+          }
+          .terminal-container {
+            margin-top: 1rem;
+          }
+          .terminal-prompt {
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+          }
+          .terminal-prompt input::placeholder {
+            color: rgba(0, 255, 0, 0.5);
           }
         `}
       </style>
@@ -172,14 +239,7 @@ const Projects = () => {
                   </span>
                 ))}
               </div>
-              <motion.a 
-                href={project.link}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block text-[#00ff00] hover:text-[#00ff00]/80 hacker-text content-text transition-colors duration-300"
-              >
-                View Project →
-              </motion.a>
+              <TerminalInput projectTitle={project.title} />
             </motion.div>
           ))}
         </div>

@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
+import PortoBeats from './components/PortoBeats'; // Add this import
 import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 
@@ -36,6 +37,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/portobeats" element={<PortoBeats />} /> {/* Add this route */}
             </Routes>
           </main>
           <Footer />

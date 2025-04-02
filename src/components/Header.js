@@ -23,11 +23,16 @@ const Header = () => {
             border: 2px solid #00ff00;
             box-shadow: 0 0 10px #00ff00;
           }
+        `}
+      </style>
+      <style>
+        {`
           .nav-link {
             font-size: clamp(0.5rem, 1vw, 0.8rem);
             line-height: 1.4;
             padding: 0.5rem 1rem;
             transition: all 0.3s ease;
+            color: #00ff00; /* Bright green */
           }
           .nav-link:hover {
             background-color: rgba(0, 255, 0, 0.1);
@@ -42,7 +47,7 @@ const Header = () => {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="text-green-500 hover:text-green-400 hacker-text text-lg">
-            Portfolio
+            <span style={{ color: '#00ff00' }}>Portfolio</span>
           </Link>
           <div className="flex space-x-4">
             <Link
