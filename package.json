@@ -2,7 +2,7 @@
   "name": "portfolio-v1",
   "version": "1.0.0",
   "description": "Personal portfolio website",
-  "homepage": "https://abuudiii.github.io/PortfolioV2",
+  "homepage": "https://abuudiii.github.io/PortfolioV3",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
