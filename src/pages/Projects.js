@@ -31,7 +31,7 @@ const TerminalInput = ({ projectTitle }) => {
             onChange={(e) => setCommand(e.target.value)}
             onKeyDown={handleKeyDown}
             className="bg-transparent text-[#00ff00] outline-none w-full hacker-text text-xs"
-            placeholder={`cd ${projectTitle}`}
+            placeholder={`type cd ${projectTitle} to view`}
             spellCheck="false"
           />
         </div>
@@ -135,20 +135,14 @@ const Projects = () => {
   const projects = [
     {
       title: "PortoBeats",
-      description: "A music streaming platform built with React and Node.js, featuring real-time audio playback and playlist management.",
-      technologies: ["React", "Node.js", "MongoDB"],
+      description: "A portable drumpad glove that allows users to map different instruments to different fingers, allowing for beat production on the go.",
+      technologies: ["MIDI Input", "Force Sensing Resistors", "Arduino IDE"],
       link: "#"
     },
     {
-      title: "Project 2",
-      description: "A full-stack web application showcasing modern development practices and responsive design.",
-      technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
-      link: "#"
-    },
-    {
-      title: "Project 3",
-      description: "An innovative solution leveraging Python and Django for efficient data processing and visualization.",
-      technologies: ["Python", "Django", "PostgreSQL"],
+      title: "PulseLink",
+      description: "A pair of 3D Printed bracelets with buzzers that communicate using ESP Now protocol.",
+      technologies: ["AutoDesk Fusion", "ESP32", "C", "ESP Now"],
       link: "#"
     }
   ];

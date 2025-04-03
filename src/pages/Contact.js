@@ -73,133 +73,128 @@ const MatrixRain = () => {
   );
 };
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+const ExitPrinter = () => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [currentCommand, setCurrentCommand] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-  };
+  const exitCommands = [
+    { name: 'Python', code: 'sys.exit()' },
+    { name: 'JavaScript', code: 'process.exit(0);' },
+    { name: 'C/C++', code: 'return 0;' },
+    { name: 'Java', code: 'System.exit(0);' },
+    { name: 'Ruby', code: 'exit!' },
+    { name: 'Go', code: 'os.Exit(0)' }
+  ];
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  useEffect(() => {
+    const currentCode = exitCommands[currentCommand].code;
+    const typingSpeed = 100; // Adjust speed as needed
+
+    const timeout = setTimeout(() => {
+      if (isDeleting) {
+        if (displayedText === '') {
+          setIsDeleting(false);
+          setCurrentCommand((prev) => (prev + 1) % exitCommands.length);
+        } else {
+          setDisplayedText(prev => prev.slice(0, -1));
+        }
+      } else {
+        if (displayedText === currentCode) {
+          setTimeout(() => setIsDeleting(true), 1000);
+        } else {
+          setDisplayedText(prev => currentCode.slice(0, prev.length + 1));
+        }
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [displayedText, isDeleting, currentCommand]);
 
   return (
-    <div className="min-h-screen bg-black relative">
-      <MatrixRain />
-      {/* Custom font for 8-bit style */}
+    <div className="font-mono text-[#00ff00] hacker-text text-xs">
       <style>
         {`
-          @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-          .hacker-text {
-            font-family: 'Press Start 2P', cursive;
-            text-shadow: 0 0 10px #00ff00;
-            line-height: 1.8;
+          @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
           }
-          .hacker-border {
-            border: 2px solid #00ff00;
-            box-shadow: 0 0 10px #00ff00;
-          }
-          .hacker-bg {
-            background-color: rgba(0, 255, 0, 0.1);
-          }
-          .section-title {
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            line-height: 1.4;
-            margin-bottom: 1.5rem;
-          }
-          .content-text {
-            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
-            line-height: 1.8;
-          }
-          .input-text {
-            font-size: clamp(0.6rem, 1.2vw, 0.8rem);
-            line-height: 1.4;
+          .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background-color: #00ff00;
+            margin-left: 4px;
+            animation: blink 1s infinite;
           }
         `}
       </style>
+      <div className="flex items-center justify-center space-x-2">
+        <span>$ {displayedText}</span>
+        <span className="cursor" />
+      </div>
+    </div>
+  );
+};
 
-      <div className="container mx-auto max-w-2xl relative z-10">
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
+const Contact = () => {
+  return (
+    <div className="min-h-screen bg-black relative">
+      <MatrixRain />
+      <div className="container mx-auto max-w-4xl relative z-10 py-20 px-8">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-green-500 text-center mb-12 hacker-text section-title"
+          className="space-y-12 text-center"
         >
-          Contact Me
-        </motion.h1>
+          {/* Header */}
+          <h1 className="text-[#00ff00] hacker-text text-xl mb-8">
+            Contact
+          </h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-black/80 backdrop-blur-sm rounded-lg shadow-lg p-8 hacker-border"
-        >
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-green-500 mb-2 hacker-text input-text">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full bg-black/80 backdrop-blur-sm border-2 border-green-500 rounded-lg px-4 py-2 text-green-400 focus:outline-none focus:border-green-400 hacker-text input-text"
-                required
-              />
-            </div>
+          {/* LinkedIn */}
+          <div className="flex items-center justify-center">
+            <p className="text-[#00ff00] hacker-text text-xs">
+              Connect with me on{' '}
+              <a
+                href="https://www.linkedin.com/feed/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-green-400 underline hover:no-underline transition-all"
+              >
+                LinkedIn
+              </a>
+            </p>
+          </div>
 
-            <div>
-              <label htmlFor="email" className="block text-green-500 mb-2 hacker-text input-text">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full bg-black/80 backdrop-blur-sm border-2 border-green-500 rounded-lg px-4 py-2 text-green-400 focus:outline-none focus:border-green-400 hacker-text input-text"
-                required
-              />
-            </div>
+          {/* GitHub */}
+          <div className="flex items-center justify-center">
+            <p className="text-[#00ff00] hacker-text text-xs">
+              Check out my projects on{' '}
+              <a
+                href="https://github.com/Abuudiii"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-green-400 underline hover:no-underline transition-all"
+              >
+                GitHub
+              </a>
+            </p>
+          </div>
 
-            <div>
-              <label htmlFor="message" className="block text-green-500 mb-2 hacker-text input-text">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows="4"
-                className="w-full bg-black/80 backdrop-blur-sm border-2 border-green-500 rounded-lg px-4 py-2 text-green-400 focus:outline-none focus:border-green-400 hacker-text input-text"
-                required
-              ></textarea>
-            </div>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              type="submit"
-              className="w-full bg-black/80 backdrop-blur-sm text-green-500 py-3 rounded-lg border-2 border-green-500 hover:bg-green-500/10 transition-colors hacker-text input-text"
-            >
-              Send Message
-            </motion.button>
-          </form>
+          {/* Portfolio Update Message */}
+          <div className="flex items-center justify-center mt-12">
+            <p className="text-[#00ff00] hacker-text text-xs">
+              Keep checking my portfolio for updates on my latest projects
+            </p>
+          </div>
         </motion.div>
+        <div className="mt-8">
+          <ExitPrinter />
+        </div>
       </div>
     </div>
   );
