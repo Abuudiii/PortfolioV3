@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import CrypticHoverText from '../components/CrypticHoverText';
 import { useNavigate } from 'react-router-dom';
 
 // New TerminalInput component
@@ -210,18 +209,7 @@ const Projects = () => {
                 {project.title}
               </h2>
               <div className="text-[#00ff00] mb-8 hacker-text content-text max-w-2xl mx-auto">
-                {project.title === "PortoBeats" ? (
-                  <div className="flex justify-center">
-                    <div className="max-w-[600px]">
-                      <CrypticHoverText 
-                        text={project.description} 
-                        className="inline-block cursor-pointer text-center leading-relaxed"
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  project.description
-                )}
+                {project.description}
               </div>
               <div className="flex flex-wrap justify-center gap-3 mb-8">
                 {project.technologies.map((tech, techIndex) => (
